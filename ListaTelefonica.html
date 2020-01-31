@@ -1,0 +1,83 @@
+<html ng-app="listaTelefonica">
+<head>    
+    <title>Lista Telefonica</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+    <style>
+        .jumbotron {
+            width: 400px;
+            text-align: center;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .form-control {
+            margin-bottom: 5px;
+        }
+    </style>
+    <script src="lib/angular/angularjs.min.js"></script>    
+    <script>
+        angular.module("listaTelefonica", []);
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
+            $scope.app = "Lista Telefonica";
+            $scope.contatos = [
+                {nome: "Pedro", telefone: "95898555"},
+                {nome: "Joaquim", telefone: "65543214"},
+                {nome: "Ana", telefone: "121243434"}
+            ];
+            $scope.adicionarContato = function (contato) {
+                $scope.contatos.push(contato);
+                delete $scope.contato;
+                //-Existem 3 formas de passar o parametro para inserção na tabela
+                //1º criar o objeto inline {nome: $scope.nome, telefone: $scope.telefone} .
+                //  O problema é que deve evitar ler o SCOPE dentro da função. é ruim para o teste unitario pois
+                //  tem que passsar o parametro por tabela ao inves de ser explicito a aplicação fica mais dificil de compreender
+                //2º Passar nome e contato dentro da função
+                // ex:  $scope.adicionarContato = function (nome, telefone) e deve-se passar o (nome e telefone) dentro
+                // da função no NG-CLICK que está no button. Mas esta forma não é legal pois tem que criar o objeto 
+                // ex: $scope.contatos.push({nome: nome, telefone: telefone});
+                //3º Maneira correta
+                // Dentro do input vai ficar ng-model="contato.nome" e ng-model="contato.telefone" ao inves de somente "nome" e telefone
+                // No ng-click a função adicionarContato(contato) vai receber o parametro contato
+                // A função adicionarContato vai receber o parametro (contato) e finalmente 
+                // O push vai ter o objeto contato
+                // O comando correto está acima do comentario                   
+                // Sempre que terminar a inserção existem duas maneiras de parar o vinculo com o "registro"
+                // 1º comando angular.copy ex: $scope.contatos.push(angular.copy(contato));
+                // 2º o mais facil e será sempre usado é apagar o $scope.contato dessa maneira quebra a referencia entre a Model e View
+                // ex: delete $scope.contato;
+            }
+        })
+
+    </script>
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+    <div class="jumbotron">        
+        <h3>{{app}} </h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+            </tr>
+            <tr ng-repeat="contato in contatos">
+                <td>{{contato.nome}}</td>
+                <td>{{contato.telefone}}</td>
+              <!--Desta maneira apresenta o mesmo codigo que o de cima porem mais facil e rápido 
+                   <td ng-repeat="(key,value) in contato">
+                    {{value}}
+              -->      
+            </tr>    
+        </table>  
+        <hr/>
+        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"> </input> 
+        <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"> </input> 
+        <button class= "btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar Contato</button>
+        
+        
+       
+
+    </div>
+</body ng-controller="listaTelefonicaCtrl">
+</html>
