@@ -9,7 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js"></script>
     <script src="lib/bootstrap/bootstrap.js"></script>
     <script src="js/navbar.js"></script>
-    <script src="../http-node-api/chartData/ "></script>
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
 </head>
 
@@ -25,12 +24,11 @@
 
             //solicita o request para api
             $.ajax({
-                url: 'http://hidden-stream-50111.herokuapp.com/api/v1/chart2',
+                url: 'http://hidden-stream-50111.herokuapp.com/api/v1/graf-positivo-negativo',
                 success: handleSucces,
                 error: handleError
             });
-            return;
-            
+
         });
 
     </script>
@@ -45,20 +43,14 @@
                     text: 'Aporte e retirada'
                 },
                 xAxis: {
-                categories: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+                    categories: data.categories
                 },
                 yAxis: {
                     title: {
                         text: 'Valores em Milhões'
                     }
-                },                
-                series: [{
-                    name: 'Jane',
-                    data: [1, 0, -4, 5, 9, -7,9,14,-26,9,45,12]
-                }, {
-                    name: 'John',
-                    data: [5, 6, -43, 65, 0, -4,69,16,-16,12,4,16]
-                }]
+                },
+                series: data.series
             });
         }
 
