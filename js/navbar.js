@@ -16,6 +16,7 @@ function meuCallback() {
               <a class="dropdown-item" href="graf-curva-linha.html">Curva Linha</a>
               <a class="dropdown-item" href="graf-piramide.html">Piramide</a>
               <a class="dropdown-item" href="evolucao-patrimonio.html">Evolução Patrimonio</a>
+              <a class="dropdown-item" href="graf-donuts.html">Donut</a>
             </div>
           </li>
         </ul>          
